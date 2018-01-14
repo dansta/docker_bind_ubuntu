@@ -30,9 +30,9 @@ ENV BIND_LOCALHOST_127 ${BIND_LOCALHOST_127:-pri/127.zone}
 ARG BIND_LOCAL_NETS
 ENV BIND_LOCAL_NETS ${BIND_LOCAL_NETS:-10.0.0.0/8;172.16.0.0/12;192.168.0.0/16;}
 ARG BIND_EFFECTIVE_USER
-ENV BIND_EFFECTIVE_USER ${BIND_EFFECTIVE_USER:-named}
+ENV BIND_EFFECTIVE_USER ${BIND_EFFECTIVE_USER:-bind}
 ARG BIND_EFFECTIVE_GROUP
-ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-named}
+ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-bind}
 
 # Healthcheck is not working, disabling for now
 #HEALTHCHECK --interval=10s --timeout=3s CMD dig @localhost www.kvantmekanik.se || exit 1
@@ -43,9 +43,6 @@ RUN mkdir -p ${WORKDIRS}
 # Update cache and install packages
 RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
                                          ${REMOVABLE_APPLICATIONS}
-
-# Change user
-#RUN adduser ${BIND_EFFECTIVE_USER} -D -H -s /usr/sbin/nologin
 
 ADD files/named.conf ${BIND_CONF} 
 ADD files/wrapper.sh /usr/bin/wrapper.sh
