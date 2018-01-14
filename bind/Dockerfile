@@ -41,8 +41,8 @@ ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-named}
 RUN mkdir -p ${WORKDIRS}
 
 # Update cache and install packages
-RUN apt-get update && apk apt-get install ${PERMANENT_APPLICATIONS} \
-                                          ${REMOVABLE_APPLICATIONS}
+RUN apt-get update && apt-get install ${PERMANENT_APPLICATIONS} \
+                                      ${REMOVABLE_APPLICATIONS}
 
 # Change user
 #RUN adduser ${BIND_EFFECTIVE_USER} -D -H -s /usr/sbin/nologin
