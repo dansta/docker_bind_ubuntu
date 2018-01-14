@@ -10,6 +10,7 @@ ARG WORKDIRS
 ENV WORKDIRS ${WORKDIRS:-/etc/named/ \
                          /var/log/named/ \
                          /var/bind/ \
+                         /var/run/named/ \
                          ${BIND_COMPILEDDIR} \
                          ${BIND_SOURCEDIR}}
 ARG PERMANENT_APPLICATIONS
