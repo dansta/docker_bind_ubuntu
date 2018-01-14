@@ -41,8 +41,8 @@ ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-named}
 RUN mkdir -p ${WORKDIRS}
 
 # Update cache and install packages
-RUN apt-get update && apt-get install ${PERMANENT_APPLICATIONS} \
-                                      ${REMOVABLE_APPLICATIONS}
+RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
+                                         ${REMOVABLE_APPLICATIONS}
 
 # Change user
 #RUN adduser ${BIND_EFFECTIVE_USER} -D -H -s /usr/sbin/nologin
@@ -75,7 +75,7 @@ RUN cp /var/bind/pri/* /var/named/ && \
 # to enable runtime environment variables being read into the application
 # Otherwise we do not need this package for runtime activities
 # Replace_conf might become a standalone binary in the future
-RUN apt-get remove ${REMOVABLE_APPLICATIONS} 
+RUN apt-get -y remove ${REMOVABLE_APPLICATIONS} 
 # Document port usage for docker in case you are going to use it as a service
 EXPOSE ${BIND_PORT}/tcp \
        ${BIND_PORT}/udp
