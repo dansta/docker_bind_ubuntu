@@ -64,10 +64,6 @@ VOLUME /var/log/named/ \
        /var/named/ \
        /var/bind/
 
-RUN cp /var/bind/pri/* /var/named/ && \
-    mv /var/named/127.zone /var/named/0.0.127.in-addr.arpa && \
-    mv /var/named/localhost.zone /var/named/master.localhost
-
 # Remove this line if you want to be able to rerun replace_conf
 # to enable runtime environment variables being read into the application
 # Otherwise we do not need this package for runtime activities
