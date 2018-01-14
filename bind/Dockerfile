@@ -1,4 +1,4 @@
-FROM gliderlabs/alpine:latest
+FROM ubuntu:latest
 
 LABEL maintainer=dansta
 
