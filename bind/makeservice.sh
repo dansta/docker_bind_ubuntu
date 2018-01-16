@@ -26,6 +26,7 @@ docker service create \
             --mount source=bind,target=/var/log/docker/bind/ \
             --mount source=bind,target=/var/docker/bind/ \
             --name "bind" \
-            --publish published=53,target=53 \
+            --publish published=53,target=53,protocol=udp \
+            --publish published=53,target=53,protocol=tcp \
             bind:0.0.1
 
