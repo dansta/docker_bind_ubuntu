@@ -1,6 +1,6 @@
 # docker_bind_ubuntu
 
-# Bind in an ubuntu based docker container
+# Resolver/cache/validating bind9 in an ubuntu based docker container
 
 Installs bind 9 with transient packages to allow dnssec
 
