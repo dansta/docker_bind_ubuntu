@@ -13,10 +13,10 @@ I made this solely because alpine arm on docker does not build. When alpine star
 * bind/named.conf can be safely edited. Anything that begins with keyword BIND_ will be replaced on build by replace.py
 * wrapper.sh exists solely as added complexity to launch that Dockerfiles are bad at.
 
-# Usage
-Build:
+## Usage
+# Build:
 * docker build -t bind:0.0.1 <path>/Dockerfile
-Run:
+# Run:
 * docker run -ti -p 53:53/tcp -p 53:53/udp bind:0.0.1
-Service:
+# Service:
 * makeservice.sh
