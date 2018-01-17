@@ -10,13 +10,13 @@ I made this solely because alpine arm on docker does not build. When alpine star
 
 # Files
 * makeservice.sh creates a service within a swarm that is accessible from scratch
-* bind/named.conf can be safely edited. Anything that begins with keyword BIND_ will be replaced on build by replace.py
+* bind/named.conf can be safely edited. Anything that begins with keyword BIND_ will be replaced on build by replace.py. Dockerfile contains the variables or they can be inserted as arguments during build
 * wrapper.sh exists solely as added complexity to launch that Dockerfiles are bad at.
 
 ## Usage
 # Build:
-* docker build -t bind:0.0.1 <path>/Dockerfile
+  docker build -t bind:0.0.1 <path>/Dockerfile
 # Run:
-* docker run -ti -p 53:53/tcp -p 53:53/udp bind:0.0.1
+  docker run -ti -p 53:53/tcp -p 53:53/udp bind:0.0.1
 # Service:
-* makeservice.sh
+  makeservice.sh
