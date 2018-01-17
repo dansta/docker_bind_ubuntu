@@ -1,6 +1,22 @@
-## docker_bind_ubuntu
+# docker_bind_ubuntu
 
 # Bind in an ubuntu based docker container
 
-Installs bind with transient packages to allow dnssec
+Installs bind 9 with transient packages to allow dnssec
 
+I made this solely because alpine arm on docker does not build. When alpine starts working again I might stop maintaining this build.
+
+
+
+# Files
+* makeservice.sh creates a service within a swarm that is accessible from scratch
+* bind/named.conf can be safely edited. Anything that begins with keyword BIND_ will be replaced on build by replace.py
+* wrapper.sh exists solely as added complexity to launch that Dockerfiles are bad at.
+
+# Usage
+Build:
+* docker build -t bind:0.0.1 <path>/Dockerfile
+Run:
+* docker run -ti -p 53:53/tcp -p 53:53/udp bind:0.0.1
+Service:
+* makeservice.sh
