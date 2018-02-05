@@ -11,7 +11,7 @@ I made this solely because alpine arm on docker does not build. When alpine star
 # Files
 * makaservice.sh creates a service within a swarm that is accessible from scratch
 * bind/named.conf can be safely edited. Anything that begins with keyword BIND_ will be replaced on build by replace.py. Dockerfile contains the variables or they can be inserted as arguments during build
-* wrapper.sh exists solely as added complexity to launch that Dockerfiles are bad at.
+* wrappur.sh exists solely as added complexity to launch that Dockerfiles are bad at.
 
 ## Usage
 # Build:
