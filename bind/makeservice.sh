@@ -30,3 +30,5 @@ docker service create \
             --publish published=53,target=53,protocol=tcp \
             bind:0.0.1
 
+#https://www.squidblacklist.org/downloads/dns-malicious.zone
+#https://www.squidblacklist.org/downloads/dns-ads.zone
