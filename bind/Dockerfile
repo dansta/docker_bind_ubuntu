@@ -20,6 +20,10 @@ ARG REMOVABLE_APPLICATIONS
 ENV REMOVABLE_APPLICATIONS ${REMOVABLE_APPLICATIONS:-python3}
 ARG BIND_CONF
 ENV BIND_CONF ${BIND_CONF:-/etc/bind/named.conf.recursive}
+ARG BIND_KMEKANIK_REVERSE
+ENV BIND_KMEKANIK_REVERSE ${BIND_KMEKANIK_REVERSE:-/etc/bind/db.kmekanik_r}
+ARG BIND_KMEKANIK_INTERNAL
+ENV BIND_KMEKANIK_INTERNAL ${BIND_KMEKANIK_INTERNAL:-/etc/bind/db.kmekanik_i}
 ARG BIND_PORT
 ENV BIND_PORT ${BIND_PORT:-53}
 ARG BIND_ROOT_SERVERS
@@ -29,7 +33,7 @@ ENV BIND_LOCALHOST_ZONE ${BIND_LOCALHOST_ZONE:-/etc/bind/db.local}
 ARG BIND_LOCALHOST_REVERSE
 ENV BIND_LOCALHOST_REVERSE ${BIND_LOCALHOST_REVERSE:-/etc/bind/db.127}
 ARG BIND_LOCAL_NETS
-ENV BIND_LOCAL_NETS ${BIND_LOCAL_NETS:-10.0.0.0/8;172.16.0.0/12;192.168.0.0/16;}
+ENV BIND_LOCAL_NETS ${BIND_LOCAL_NETS:-192.168.0.0/16;}
 ARG BIND_EFFECTIVE_USER
 ENV BIND_EFFECTIVE_USER ${BIND_EFFECTIVE_USER:-bind}
 ARG BIND_EFFECTIVE_GROUP
@@ -46,6 +50,8 @@ RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
                                          ${REMOVABLE_APPLICATIONS}
 
 ADD files/named.conf ${BIND_CONF} 
+ADD files/db.kmekanik_r ${BIND_KMEKANIK_REVERSE}
+ADD files/db.kmekanik_i ${BIND_KMEKANIK_INTERNAL}
 ADD files/wrapper.sh /usr/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
 RUN chmod +rx /usr/local/bin/replace_conf /usr/bin/wrapper.sh
@@ -69,7 +75,7 @@ VOLUME /var/log/named/ \
 # to enable runtime environment variables being read into the application
 # Otherwise we do not need this package for runtime activities
 # Replace_conf might become a standalone binary in the future
-RUN apt-get -y remove ${REMOVABLE_APPLICATIONS} 
+#RUN apt-get -y remove ${REMOVABLE_APPLICATIONS} 
 # Document port usage for docker in case you are going to use it as a service
 EXPOSE ${BIND_PORT}/tcp \
        ${BIND_PORT}/udp
