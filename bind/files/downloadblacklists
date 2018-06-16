@@ -14,4 +14,10 @@ EXITVALUE=$?
 if [ $EXITVALUE != 0 ]; then
     /usr/bin/logger -t download_adzone "ALERT exited abnormally with [$EXITVALUE]"
 fi
+
+rndc reload
+EXITVALUE=$?
+if [ $EXITVALUE != 0 ]; then
+    /usr/bin/logger -t rndc_reload "ALERT exited abnormally with [$EXITVALUE]"
+fi
 exit 0
