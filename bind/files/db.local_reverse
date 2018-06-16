@@ -1,4 +1,3 @@
-$ORIGIN 10.168.192.IN-ADDR.ARPA
 $TTL	604800
 @	IN SOA	n1.local. danne.local (
 			      4		; Serial

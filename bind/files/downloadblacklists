@@ -2,14 +2,14 @@
 
 # script to download ads and malware blacklists
 
-wget -O /etc/named/mal.zone https://www.squidblacklist.org/downloads/dns-malicious.zone
+wget -O /etc/bind/mal.zone https://www.squidblacklist.org/downloads/dns-malicious.zone && awk '{print $2}' /etc/bind/mal.zone | tr -d \" | xargs -t -I % rndc addzone % '{ type master; file db.badhosts; };'
 EXITVALUE=$?
 if [ $EXITVALUE != 0 ]; then
     /usr/bin/logger -t download_malzone "ALERT exited abnormally with [$EXITVALUE]"
 fi
 
 
-wget -O /etc/named/ads.zone https://www.squidblacklist.org/downloads/dns-ads.zone
+wget -O /etc/bind/ads.zone https://www.squidblacklist.org/downloads/dns-ads.zone && awk '{print $2}' /etc/bind/ads.zone | tr -d \" | xargs -t -I % rndc addzone % '{ type master; file db.badhosts; };'
 EXITVALUE=$?
 if [ $EXITVALUE != 0 ]; then
     /usr/bin/logger -t download_adzone "ALERT exited abnormally with [$EXITVALUE]"
