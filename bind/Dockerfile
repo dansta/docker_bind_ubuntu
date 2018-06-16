@@ -15,15 +15,16 @@ ENV WORKDIRS ${WORKDIRS:-/etc/named/ \
                          ${BIND_SOURCEDIR}}
 ARG PERMANENT_APPLICATIONS
 ENV PERMANENT_APPLICATIONS ${PERMANENT_APPLICATIONS:-bind9 \
-                                                     ca-certificates}
+                                                     ca-certificates \
+						     wget}
 ARG REMOVABLE_APPLICATIONS
 ENV REMOVABLE_APPLICATIONS ${REMOVABLE_APPLICATIONS:-python3}
 ARG BIND_CONF
 ENV BIND_CONF ${BIND_CONF:-/etc/bind/named.conf.recursive}
-ARG BIND_KMEKANIK_REVERSE
-ENV BIND_KMEKANIK_REVERSE ${BIND_KMEKANIK_REVERSE:-/etc/bind/db.kmekanik_r}
-ARG BIND_KMEKANIK_INTERNAL
-ENV BIND_KMEKANIK_INTERNAL ${BIND_KMEKANIK_INTERNAL:-/etc/bind/db.kmekanik_i}
+ARG BIND_LOCAL_REVERSE
+ENV BIND_LOCAL_REVERSE ${BIND_LOCAL_REVERSE:-/etc/bind/db.local_reverse}
+ARG BIND_LOCAL_INTERNAL
+ENV BIND_LOCAL_INTERNAL ${BIND_LOCAL_INTERNAL:-/etc/bind/db.local_internal}
 ARG BIND_PORT
 ENV BIND_PORT ${BIND_PORT:-53}
 ARG BIND_ROOT_SERVERS
@@ -50,8 +51,8 @@ RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
                                          ${REMOVABLE_APPLICATIONS}
 
 ADD files/named.conf ${BIND_CONF} 
-ADD files/db.kmekanik_r ${BIND_KMEKANIK_REVERSE}
-ADD files/db.kmekanik_i ${BIND_KMEKANIK_INTERNAL}
+ADD files/db.local_reverse ${BIND_LOCAL_REVERSE}
+ADD files/db.local_internal ${BIND_LOCAL_INTERNAL}
 ADD files/wrapper.sh /usr/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
 RUN chmod +rx /usr/local/bin/replace_conf /usr/bin/wrapper.sh

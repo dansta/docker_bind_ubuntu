@@ -1,0 +1,29 @@
+$TTL 604800
+@ IN SOA n1.local. root.localhost. (
+         3;          Serial
+         604800;     Refresh
+         86400;      Retry
+         2419200;    Expire
+         604800 );   Negative Cache TTL
+
+; define nameservers
+                IN NS      n1
+                IN NS      n2 
+; nameserver ip addresses
+n1              IN A       192.168.10.150
+n2              IN A       192.168.10.151
+
+; roundrobin service
+service         IN A       192.168.10.150 
+                IN A       192.168.10.151 
+
+; misc hosts
+containerhost1  IN A       192.168.10.150
+containerhost2  IN A       192.168.10.151
+desktop         IN A       192.168.10.7
+dfgw            IN A       192.168.10.1
+ettus           IN A       192.168.10.2
+lenovo          IN A       192.168.10.10
+littlehouse     IN A       192.168.10.3
+mon             IN A       192.168.10.152
+virt            IN A       192.168.10.130

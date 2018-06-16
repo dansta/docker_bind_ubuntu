@@ -1,0 +1,19 @@
+$ORIGIN 10.168.192.IN-ADDR.ARPA
+$TTL	604800
+@	IN SOA	n1.local. danne.local (
+			      4		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+	IN	NS      n1.local 
+        IN      NS      n2.local 
+1       IN      PTR     dfgw.local
+2       IN      PTR     ettus.local
+3       IN      PTR     littlehouse.local
+7       IN      PTR     desktop.local
+10      IN      PTR     lenovo.local
+130     IN      PTR     virt.local
+150     IN      PTR     containerhost1.local
+151     IN      PTR     containerhost2.local
+152     IN      PTR     mon.local

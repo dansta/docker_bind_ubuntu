@@ -9,7 +9,8 @@ docker volume create bind
 # Create service
 docker service create \
             --mode global \
-            --update-delay 60s \
+            --update-delay 0s \
+            --update-failure-action="rollback" \
             --update-parallelism 1 \
             --dns 127.0.0.1 \
             --mount source=bind,target=/var/log/docker/bind/ \
