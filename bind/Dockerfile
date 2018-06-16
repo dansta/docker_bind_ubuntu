@@ -15,6 +15,7 @@ ENV WORKDIRS ${WORKDIRS:-/etc/named/ \
                          ${BIND_SOURCEDIR}}
 ARG PERMANENT_APPLICATIONS
 ENV PERMANENT_APPLICATIONS ${PERMANENT_APPLICATIONS:-bind9 \
+                                                     cron \
                                                      ca-certificates \
 						     wget}
 ARG REMOVABLE_APPLICATIONS
@@ -55,6 +56,7 @@ ADD files/db.local_reverse ${BIND_LOCAL_REVERSE}
 ADD files/db.local_internal ${BIND_LOCAL_INTERNAL}
 ADD files/wrapper.sh /usr/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
+ADD files/downloadblacklists /downloadblacklists
 RUN chmod +rx /usr/local/bin/replace_conf /usr/bin/wrapper.sh
 RUN /usr/local/bin/replace_conf ${BIND_CONF} BIND
 RUN /usr/local/bin/replace_conf /usr/bin/wrapper.sh BIND
