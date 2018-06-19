@@ -7,7 +7,7 @@ ENV BIND_COMPILEDDIR ${BIND_COMPILEDDIR:-/var/named}
 ARG BIND_SOURCEDIR
 ENV BIND_SOURCEDIR ${BIND_SOURCEDIR:-/var/bind}
 ARG WORKDIRS
-ENV WORKDIRS ${WORKDIRS:-/etc/named/ \
+ENV WORKDIRS ${WORKDIRS:-/etc/bind/ \
                          /var/log/named/ \
                          /var/bind/ \
                          /var/run/named/ \
@@ -23,9 +23,9 @@ ENV REMOVABLE_APPLICATIONS ${REMOVABLE_APPLICATIONS:-python3}
 ARG BIND_CONF
 ENV BIND_CONF ${BIND_CONF:-/etc/bind/named.conf.recursive}
 ARG BIND_LOCAL_REVERSE
-ENV BIND_LOCAL_REVERSE ${BIND_LOCAL_REVERSE:-/etc/bind/db.local_reverse}
+ENV BIND_LOCAL_REVERSE ${BIND_LOCAL_REVERSE:-/etc/bind/db.fqdn.tld_reverse}
 ARG BIND_LOCAL_INTERNAL
-ENV BIND_LOCAL_INTERNAL ${BIND_LOCAL_INTERNAL:-/etc/bind/db.local_internal}
+ENV BIND_LOCAL_INTERNAL ${BIND_LOCAL_INTERNAL:-/etc/bind/db.fqdn.tld_internal}
 ARG BIND_PORT
 ENV BIND_PORT ${BIND_PORT:-53}
 ARG BIND_ROOT_SERVERS
@@ -35,14 +35,14 @@ ENV BIND_LOCALHOST_ZONE ${BIND_LOCALHOST_ZONE:-/etc/bind/db.local}
 ARG BIND_LOCALHOST_REVERSE
 ENV BIND_LOCALHOST_REVERSE ${BIND_LOCALHOST_REVERSE:-/etc/bind/db.127}
 ARG BIND_LOCAL_NETS
-ENV BIND_LOCAL_NETS ${BIND_LOCAL_NETS:-192.168.0.0/16;}
+ENV BIND_LOCAL_NETS ${BIND_LOCAL_NETS:-10.0.0.0/8;172.16.0.0/12;192.168.10.0/24;}
 ARG BIND_EFFECTIVE_USER
 ENV BIND_EFFECTIVE_USER ${BIND_EFFECTIVE_USER:-bind}
 ARG BIND_EFFECTIVE_GROUP
 ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-bind}
 
 # Healthcheck is not working, disabling for now
-#HEALTHCHECK --interval=10s --timeout=3s CMD dig @localhost www.kvantmekanik.se || exit 1
+#HEALTHCHECK --interval=10s --timeout=3s CMD dig .fqdn.tld || exit 1
 
 # Create confdirs
 RUN mkdir -p ${WORKDIRS}
@@ -52,14 +52,14 @@ RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
                                          ${REMOVABLE_APPLICATIONS}
 
 ADD files/named.conf ${BIND_CONF} 
-ADD files/db.local_reverse ${BIND_LOCAL_REVERSE}
-ADD files/db.local_internal ${BIND_LOCAL_INTERNAL}
-ADD files/wrapper.sh /usr/bin/wrapper.sh
+ADD files/db.fqdn.tld_reverse ${BIND_LOCAL_REVERSE}
+ADD files/db.fqdn.tld_internal ${BIND_LOCAL_INTERNAL}
+ADD files/wrapper.sh /usr/local/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
 ADD files/downloadblacklists /downloadblacklists
-RUN chmod +rx /usr/local/bin/replace_conf /usr/bin/wrapper.sh
+RUN chmod +rx /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh
 RUN /usr/local/bin/replace_conf ${BIND_CONF} BIND
-RUN /usr/local/bin/replace_conf /usr/bin/wrapper.sh BIND
+RUN /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh BIND
 RUN rm -f /usr/local/bin/replace_conf
 
 
@@ -85,4 +85,4 @@ EXPOSE ${BIND_PORT}/tcp \
 
 
 # Test squid for build
-CMD /usr/bin/wrapper.sh
+CMD /usr/local/bin/wrapper.sh
