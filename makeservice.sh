@@ -18,7 +18,7 @@ docker service create \
             --name "bind" \
             --publish published=53,target=53,protocol=udp \
             --publish published=53,target=53,protocol=tcp \
-            192.168.10.150:5000/bind
+            192.168.1.1:5000/bind
 
 #https://www.squidblacklist.org/downloads/dns-malicious.zone
 #https://www.squidblacklist.org/downloads/dns-ads.zone
