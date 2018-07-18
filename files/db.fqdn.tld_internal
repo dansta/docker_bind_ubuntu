@@ -10,21 +10,6 @@ $TTL 604800
                 IN NS      n1
                 IN NS      n2 
 ; nameserver ip addresses
-n1              IN A       192.168.10.150
-n2              IN A       192.168.10.151
+n1              IN A       192.168.1.1
 
-; roundrobin service
-service         IN A       192.168.10.150 
-                IN A       192.168.10.151 
-
-; misc hosts
-gitlab          IN A       192.168.10.4
-containerhost1  IN A       192.168.10.150
-containerhost2  IN A       192.168.10.151
-desktop         IN A       192.168.10.7
-dfgw            IN A       192.168.10.1
-ettus           IN A       192.168.10.2
-lenovo          IN A       192.168.10.10
-littlehouse     IN A       192.168.10.3
-mon             IN A       192.168.10.152
-virt            IN A       192.168.10.130
+; empty file because it doesnt make sense for anyone else to have my ips

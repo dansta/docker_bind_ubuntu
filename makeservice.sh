@@ -8,7 +8,7 @@ docker volume create bind
 
 # Create service
 docker service create \
-            --mode global \
+            --replicas 4 \
             --update-delay 0s \
             --update-failure-action="rollback" \
             --update-parallelism 1 \
