@@ -1,0 +1,17 @@
+$TTL 604800
+@ IN SOA n1.localzone.com. someone.localzone.com (
+      4 Serial
+ 604800; Refresh
+ 86400; Retry
+ 2419200; Expire
+ 604800 ); Negative Cache TTL
+IN NS      n1
+IN NS      n2
+
+; glue
+n1      IN      A       10.0.0.1
+n2      IN      A       10.0.0.2
+
+; entries
+5 IN PTR     stuff.localzone.com
+

@@ -23,9 +23,9 @@ ENV REMOVABLE_APPLICATIONS ${REMOVABLE_APPLICATIONS:-python3}
 ARG BIND_CONF
 ENV BIND_CONF ${BIND_CONF:-/etc/bind/named.conf.recursive}
 ARG BIND_LOCAL_REVERSE
-ENV BIND_LOCAL_REVERSE ${BIND_LOCAL_REVERSE:-/etc/bind/db.fqdn.tld_reverse}
+ENV BIND_LOCAL_REVERSE ${BIND_LOCAL_REVERSE:-/etc/bind/db.localzone.com_reverse}
 ARG BIND_LOCAL_INTERNAL
-ENV BIND_LOCAL_INTERNAL ${BIND_LOCAL_INTERNAL:-/etc/bind/db.fqdn.tld_internal}
+ENV BIND_LOCAL_INTERNAL ${BIND_LOCAL_INTERNAL:-/etc/bind/db.localzone.com_internal}
 ARG BIND_PORT
 ENV BIND_PORT ${BIND_PORT:-53}
 ARG BIND_ROOT_SERVERS
@@ -42,7 +42,7 @@ ARG BIND_EFFECTIVE_GROUP
 ENV BIND_EFFECTIVE_GROUP ${BIND_EFFECTIVE_GROUP:-bind}
 
 # Healthcheck is not working, disabling for now
-#HEALTHCHECK --interval=10s --timeout=3s CMD dig .fqdn.tld || exit 1
+#HEALTHCHECK --interval=10s --timeout=3s CMD dig .localzone.com || exit 1
 
 # Create confdirs
 RUN mkdir -p ${WORKDIRS}
@@ -52,12 +52,12 @@ RUN apt-get update && apt-get install -y ${PERMANENT_APPLICATIONS} \
                                          ${REMOVABLE_APPLICATIONS}
 
 ADD files/named.conf ${BIND_CONF} 
-ADD files/db.fqdn.tld_reverse ${BIND_LOCAL_REVERSE}
-ADD files/db.fqdn.tld_internal ${BIND_LOCAL_INTERNAL}
+ADD files/db.localzone.com_reverse ${BIND_LOCAL_REVERSE}
+ADD files/db.localzone.com_internal ${BIND_LOCAL_INTERNAL}
 ADD files/wrapper.sh /usr/local/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
 ADD files/downloadblacklists /downloadblacklists
-RUN chmod +rx /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh
+RUN chmod +rx /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh /downloadblacklists
 RUN /usr/local/bin/replace_conf ${BIND_CONF} BIND
 RUN /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh BIND
 RUN rm -f /usr/local/bin/replace_conf
