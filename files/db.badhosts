@@ -9,7 +9,7 @@ $TTL 604800
 ; define nameservers
                 IN NS      n1
                 IN NS      n2 
-; nameserver ip addresses
-n1              IN A       192.168.1.1
 
-; empty file because it doesnt make sense for anyone else to have my ips
+; block all
+@       IN      A    127.0.0.1
+*       IN      A    127.0.0.1

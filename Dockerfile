@@ -57,6 +57,10 @@ ADD files/db.localzone.com_internal ${BIND_LOCAL_INTERNAL}
 ADD files/wrapper.sh /usr/local/bin/wrapper.sh
 ADD files/replace.py /usr/local/bin/replace_conf
 ADD files/downloadblacklists /downloadblacklists
+<<<<<<< HEAD
+=======
+ADD files/db.badhosts /etc/bind/db.badhosts
+>>>>>>> Adding vpn config
 RUN chmod +rx /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh /downloadblacklists
 RUN /usr/local/bin/replace_conf ${BIND_CONF} BIND
 RUN /usr/local/bin/replace_conf /usr/local/bin/wrapper.sh BIND
@@ -84,5 +88,4 @@ EXPOSE ${BIND_PORT}/tcp \
        ${BIND_PORT}/udp
 
 
-# Test squid for build
 CMD /usr/local/bin/wrapper.sh
